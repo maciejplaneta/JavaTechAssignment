@@ -1,4 +1,4 @@
-package com.example.javatechassignment.db_model;
+package com.example.javatechassignment.files.metadata;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

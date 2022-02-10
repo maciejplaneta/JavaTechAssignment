@@ -1,19 +1,15 @@
-package com.example.javatechassignment.store_file;
+package com.example.javatechassignment.files.storage;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.nio.file.Paths;
 import java.util.Optional;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.javatechassignment.StorageDirectory;
-import com.example.javatechassignment.db_model.StoredFile;
-import com.example.javatechassignment.db_model.StoredFilesRepository;
+import com.example.javatechassignment.files.metadata.StoredFile;
+import com.example.javatechassignment.files.metadata.StoredFilesRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -56,28 +51,24 @@ class FileStorageController {
     }
 
     @GetMapping(value = "/{fileId}")
-    public ResponseEntity<Resource> getStoredFile(@PathVariable("fileId") Long fileId) {
-
+    public ResponseEntity<byte[]> getStoredFile(@PathVariable("fileId") Long fileId) {
         Optional<StoredFile> fileOptional = filesRepository.findById(fileId);
 
-        return fileOptional.map(storedFile -> {
-            File file = new File(StorageDirectory.path(), fileId + "_" + storedFile.getCurrentName());
-            Resource resource;
-            try {
-                resource = new UrlResource(Paths.get(file.getAbsolutePath()).toUri());
-            } catch(MalformedURLException e) {
-                e.printStackTrace();
-                return new ResponseEntity<Resource>(HttpStatus.BAD_REQUEST);
-            }
+        return fileOptional.map(storedFile -> createGetFileResponse(fileId, storedFile))
+                           .orElse(ResponseEntity.notFound().build());
+    }
 
+    private ResponseEntity<byte[]> createGetFileResponse(Long fileId, StoredFile storedFile) {
+        File file = new File(StorageDirectory.path(), fileId + "_" + storedFile.getCurrentName());
+        try {
+            byte[] fileBytes = FileUtils.readFileToByteArray(file);
             HttpHeaders headers = new HttpHeaders();
-            headers.setContentDisposition(ContentDisposition
-                  .attachment()
-                  .filename(storedFile.getId() + " _ " + storedFile.getCurrentName())
-                  .build());
-
-            return new ResponseEntity<Resource>(resource, headers, HttpStatus.OK);
-        }).orElse(new ResponseEntity<Resource>(HttpStatus.NOT_FOUND));
+            headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
+            return ResponseEntity.ok().headers(headers).body(fileBytes);
+        } catch(IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @Value

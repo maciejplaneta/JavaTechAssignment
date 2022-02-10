@@ -1,4 +1,4 @@
-package com.example.javatechassignment;
+package com.example.javatechassignment.files.storage;
 
 import java.io.IOException;
 import java.nio.file.Files;

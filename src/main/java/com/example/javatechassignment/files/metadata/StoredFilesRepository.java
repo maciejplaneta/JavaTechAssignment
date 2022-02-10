@@ -1,4 +1,4 @@
-package com.example.javatechassignment.db_model;
+package com.example.javatechassignment.files.metadata;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
