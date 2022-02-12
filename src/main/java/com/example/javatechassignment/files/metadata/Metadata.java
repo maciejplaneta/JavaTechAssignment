@@ -5,13 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import org.apache.commons.io.FilenameUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "stored_file")
-public class StoredFile {
+@NoArgsConstructor
+public class Metadata {
 
     @Id
     @GeneratedValue
@@ -30,4 +34,10 @@ public class StoredFile {
     @Column(name = "extension")
     private String extension;
 
+    public Metadata(MultipartFile multipartFile) {
+        this.originalName = multipartFile.getOriginalFilename();
+        this.currentName = multipartFile.getOriginalFilename();
+        this.size = multipartFile.getSize();
+        this.extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+    }
 }
