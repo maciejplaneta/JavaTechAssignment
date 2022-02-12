@@ -1,4 +1,4 @@
-package com.example.javatechassignment.files.storage;
+package com.example.javatechassignment.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

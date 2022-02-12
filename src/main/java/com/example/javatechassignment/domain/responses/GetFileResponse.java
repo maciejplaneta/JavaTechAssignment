@@ -1,6 +1,6 @@
-package com.example.javatechassignment.files.storage.responses;
+package com.example.javatechassignment.domain.responses;
 
-import com.example.javatechassignment.files.metadata.Metadata;
+import com.example.javatechassignment.domain.metadata.Metadata;
 
 import lombok.Value;
 

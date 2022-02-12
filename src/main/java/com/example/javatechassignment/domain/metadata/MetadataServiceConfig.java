@@ -1,4 +1,4 @@
-package com.example.javatechassignment.files.metadata;
+package com.example.javatechassignment.domain.metadata;
 
 import org.springframework.context.annotation.Bean;
 

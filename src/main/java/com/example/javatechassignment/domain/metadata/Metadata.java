@@ -1,4 +1,4 @@
-package com.example.javatechassignment.files.metadata;
+package com.example.javatechassignment.domain.metadata;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Table(name = "stored_file")
+@Table(name = "file_metadata")
 @NoArgsConstructor
 public class Metadata {
 

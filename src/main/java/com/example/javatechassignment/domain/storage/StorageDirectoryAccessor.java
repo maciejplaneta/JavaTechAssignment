@@ -1,4 +1,4 @@
-package com.example.javatechassignment.files.storage;
+package com.example.javatechassignment.domain.storage;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,14 +10,14 @@ import org.springframework.http.HttpStatus;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class StorageDirectory {
+public class StorageDirectoryAccessor {
 
-    private static StorageDirectory instance;
+    private static StorageDirectoryAccessor instance;
 
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy_HH-mm-ss");
     private final String path;
 
-    private StorageDirectory() {
+    private StorageDirectoryAccessor() {
         path = generateStorageDirectoryPath();
         try {
             log.info("Creating storage directory: " + path);
@@ -28,19 +28,19 @@ public class StorageDirectory {
         }
     }
 
-    public static boolean create() {
+    public static boolean createStorageDirectory() {
         boolean isAlreadyCreated = true;
         if (instance == null) {
             isAlreadyCreated = false;
-            instance = new StorageDirectory();
+            instance = new StorageDirectoryAccessor();
         }
 
         return isAlreadyCreated;
     }
 
-    public static String path() {
+    public static String storagePath() {
         if (instance == null) {
-            instance = new StorageDirectory();
+            instance = new StorageDirectoryAccessor();
         }
         return instance.path;
     }
