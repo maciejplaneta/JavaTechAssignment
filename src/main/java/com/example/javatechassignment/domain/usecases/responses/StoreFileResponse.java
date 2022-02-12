@@ -1,4 +1,4 @@
-package com.example.javatechassignment.domain.responses;
+package com.example.javatechassignment.domain.usecases.responses;
 
 import com.example.javatechassignment.domain.metadata.Metadata;
 

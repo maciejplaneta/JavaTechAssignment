@@ -6,6 +6,7 @@ import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.metadata.MetadataServiceConfig;
 import com.example.javatechassignment.domain.storage.StorageService;
 import com.example.javatechassignment.domain.storage.StorageServiceConfig;
+import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
 import com.example.javatechassignment.domain.usecases.GetFileUseCase;
 import com.example.javatechassignment.domain.usecases.StoreFileUseCase;
 
@@ -20,6 +21,11 @@ public class UseCasesConfiguration {
     @Bean
     public GetFileUseCase getFileUseCase(MetadataService metadataService, StorageService storageService) {
         return new GetFileUseCase(metadataService, storageService);
+    }
+
+    @Bean
+    public DeleteFileUseCase deleteFileUseCase(MetadataService metadataService, StorageService storageService) {
+        return new DeleteFileUseCase(metadataService, storageService);
     }
 
 }

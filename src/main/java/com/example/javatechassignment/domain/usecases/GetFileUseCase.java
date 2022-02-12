@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.apache.commons.io.FileUtils;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
-import com.example.javatechassignment.domain.responses.GetFileResponse;
 import com.example.javatechassignment.domain.storage.StorageService;
 import com.example.javatechassignment.domain.storage.exceptions.StoringFileException;
+import com.example.javatechassignment.domain.usecases.responses.GetFileResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

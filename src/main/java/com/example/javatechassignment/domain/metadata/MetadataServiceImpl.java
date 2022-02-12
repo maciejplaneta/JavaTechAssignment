@@ -22,8 +22,8 @@ class MetadataServiceImpl implements MetadataService {
     }
 
     @Override
-    public boolean deleteMetadata(Long fileId) {
-        return false;
+    public void deleteMetadata(Long fileId) {
+        storageRepository.deleteById(fileId);
     }
 
 }

@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
-import com.example.javatechassignment.domain.responses.StoreFileResponse;
 import com.example.javatechassignment.domain.storage.StorageService;
+import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -9,5 +9,5 @@ public interface MetadataService {
 
     Optional<Metadata> getMetadata(Long fileId);
 
-    boolean deleteMetadata(Long fileId);
+    void deleteMetadata(Long fileId);
 }

@@ -1,24 +1,21 @@
-package com.example.javatechassignment.domain.responses;
+package com.example.javatechassignment.domain.usecases.responses;
 
 import com.example.javatechassignment.domain.metadata.Metadata;
 
 import lombok.Value;
 
 @Value
-public class GetFileResponse {
+public class DeleteFileResponse {
+
     Long fileId;
     String currentFileName;
     String originalFileName;
-    Long fileSize;
     String fileExtension;
-    byte[] content;
 
-    public GetFileResponse(Metadata metadata, byte[] content) {
+    public DeleteFileResponse(Metadata metadata) {
         this.fileId = metadata.getId();
         this.currentFileName = metadata.getCurrentName();
         this.originalFileName = metadata.getOriginalName();
-        this.fileSize = metadata.getSize();
         this.fileExtension = metadata.getExtension();
-        this.content = content;
     }
 }
