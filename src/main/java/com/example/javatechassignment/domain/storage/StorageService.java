@@ -13,4 +13,6 @@ public interface StorageService {
     File getFile(Metadata metadata);
 
     boolean deleteFile(Metadata metadata) throws FileNotFoundException;
+
+    void replaceFile(Metadata metadata, MultipartFile newFile) throws IOException;
 }

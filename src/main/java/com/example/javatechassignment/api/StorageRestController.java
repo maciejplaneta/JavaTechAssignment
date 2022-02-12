@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.javatechassignment.domain.storage.exceptions.DeletingFileException;
 import com.example.javatechassignment.domain.storage.exceptions.ReadingFileException;
+import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.storage.exceptions.StoringFileException;
 import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
 import com.example.javatechassignment.domain.usecases.GetFileUseCase;
+import com.example.javatechassignment.domain.usecases.ReplaceFileUseCase;
 import com.example.javatechassignment.domain.usecases.StoreFileUseCase;
 import com.example.javatechassignment.domain.usecases.responses.DeleteFileResponse;
+import com.example.javatechassignment.domain.usecases.responses.ReplaceFileResponse;
 import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
 
 import lombok.AllArgsConstructor;
@@ -35,6 +38,7 @@ class StorageRestController {
 
     private StoreFileUseCase storeFileUseCase;
     private GetFileUseCase getFileUseCase;
+    private ReplaceFileUseCase replaceFileUseCase;
     private DeleteFileUseCase deleteFileUseCase;
 
     @PostMapping
@@ -54,6 +58,17 @@ class StorageRestController {
                     .header(CONTENT_DISPOSITION, format("attachment; filename=%s", response.getCurrentFileName()))
                     .body(response.getContent()))
               .orElseThrow(ReadingFileException::new);
+    }
+
+    @PostMapping(value = "/{fileId}")
+    public ResponseEntity<ReplaceFileResponse> replaceFile(@PathVariable("fileId") Long fileId,
+          @RequestParam("file") MultipartFile newFile) {
+        return replaceFileUseCase
+              .replace(fileId, newFile)
+              .map(response -> ResponseEntity
+                    .status(OK)
+                    .body(response))
+              .orElseThrow(ReplacingFileException::new);
     }
 
     @DeleteMapping(value = "/{fileId}")

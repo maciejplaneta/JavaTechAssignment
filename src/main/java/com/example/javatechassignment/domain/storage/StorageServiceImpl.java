@@ -30,4 +30,10 @@ class StorageServiceImpl implements StorageService {
             throw new FileNotFoundException();
         }
     }
+
+    @Override
+    public void replaceFile(Metadata metadata, MultipartFile newFile) throws IOException {
+        deleteFile(metadata);
+        storeFile(newFile, metadata);
+    }
 }
