@@ -1,4 +1,4 @@
-package com.example.javatechassignment.domain;
+package com.example.javatechassignment.domain.usecases;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -6,10 +6,6 @@ import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.metadata.MetadataServiceConfig;
 import com.example.javatechassignment.domain.storage.StorageService;
 import com.example.javatechassignment.domain.storage.StorageServiceConfig;
-import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
-import com.example.javatechassignment.domain.usecases.GetFileUseCase;
-import com.example.javatechassignment.domain.usecases.ReplaceFileUseCase;
-import com.example.javatechassignment.domain.usecases.StoreFileUseCase;
 
 @Import({MetadataServiceConfig.class, StorageServiceConfig.class})
 public class UseCasesConfiguration {
