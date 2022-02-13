@@ -27,14 +27,17 @@ class MetadataServiceImpl implements MetadataService {
     }
 
     @Override
-    public Optional<Metadata> update(Long fileId, MultipartFile newFile) {
-        Optional<Metadata> oldFile = metadataRepository.findById(fileId);
+    public Metadata update(Metadata oldMetadata, MultipartFile newFile) {
+        oldMetadata.setCurrentName(newFile.getOriginalFilename());
+        oldMetadata.setSize(newFile.getSize());
 
-        return oldFile.map(metadata -> {
-            metadata.setCurrentName(newFile.getOriginalFilename());
-            metadata.setSize(newFile.getSize());
-            return Optional.of(metadataRepository.save(metadata));
-        }).orElse(Optional.empty());
+        return metadataRepository.save(oldMetadata);
+
+//        return oldFile.map(metadata -> {
+//            metadata.setCurrentName(newFile.getOriginalFilename());
+//            metadata.setSize(newFile.getSize());
+//            return Optional.of(metadataRepository.save(metadata));
+//        }).orElse(Optional.empty());
     }
 
 }

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
+import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.usecases.responses.ReplaceFileResponse;
 
 import lombok.AllArgsConstructor;
@@ -21,19 +22,16 @@ public class ReplaceFileUseCase {
     public Optional<ReplaceFileResponse> replace(Long fileId, MultipartFile newFile) {
         log.info("Trying to replace file of ID: {}", fileId);
 
-        return metadataService.getMetadata(fileId)
-              .map(metadata -> tryToReplaceFile(metadata, newFile))
-              .orElse(Optional.empty());
-
+        Optional<Metadata> oldMetadata = metadataService.getMetadata(fileId);
+        return oldMetadata.map(metadata -> tryToReplaceFile(metadata, newFile));
     }
 
-    private Optional<ReplaceFileResponse> tryToReplaceFile(Metadata metadata, MultipartFile newFile) {
+    private ReplaceFileResponse tryToReplaceFile(Metadata oldMetadata, MultipartFile newFile) {
         try {
-            storageService.replaceFile(metadata, newFile);
-            return metadataService.update(metadata.getId(), newFile).map(ReplaceFileResponse::new);
+            storageService.replaceFile(oldMetadata, newFile);
+            return new ReplaceFileResponse(metadataService.update(oldMetadata, newFile));
         } catch(IOException e) {
-            log.info("Replacing file failed due to: ", e);
-            return Optional.empty();
+            throw new ReplacingFileException(e);
         }
     }
 }

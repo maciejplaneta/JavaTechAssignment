@@ -11,5 +11,5 @@ public interface MetadataService {
 
     void deleteMetadata(Long fileId);
 
-    Optional<Metadata> update(Long fileId, MultipartFile newFile);
+    Metadata update(Metadata oldMetadata, MultipartFile newFile);
 }

@@ -30,14 +30,14 @@ class StorageServiceImpl implements StorageService {
         if (file.exists()) {
             return file.delete();
         } else {
-            throw new FileNotFoundException();
+            throw new FileNotFoundException(String.format("File '%s' not found", metadata.getCurrentName()));
         }
     }
 
     @Override
-    public void replaceFile(Metadata metadata, MultipartFile newFile) throws IOException {
-        deleteFile(metadata);
-        storeFile(newFile, metadata);
+    public void replaceFile(Metadata oldMetadata, MultipartFile newFile) throws IOException {
+        deleteFile(oldMetadata);
+        storeFile(newFile, oldMetadata);
     }
 
     private boolean storageDirectoryDoesNotExist() {

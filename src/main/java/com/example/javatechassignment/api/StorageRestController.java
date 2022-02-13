@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
 import com.example.javatechassignment.domain.usecases.GetFileUseCase;
 import com.example.javatechassignment.domain.usecases.ReplaceFileUseCase;
@@ -54,7 +54,7 @@ class StorageRestController {
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
-    @PostMapping(value = "/{fileId}")
+    @PutMapping(value = "/{fileId}")
     public ResponseEntity<ReplaceFileResponse> replaceFile(@PathVariable("fileId") Long fileId,
           @RequestParam("file") MultipartFile newFile) {
         return replaceFileUseCase
@@ -62,7 +62,7 @@ class StorageRestController {
               .map(response -> ResponseEntity
                     .status(OK)
                     .body(response))
-              .orElseThrow(ReplacingFileException::new);
+              .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
     @DeleteMapping(value = "/{fileId}")
