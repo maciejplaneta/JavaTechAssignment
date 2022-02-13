@@ -5,6 +5,7 @@ import java.util.Optional;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
+import com.example.javatechassignment.domain.storage.exceptions.DeletingFileException;
 import com.example.javatechassignment.domain.usecases.responses.DeleteFileResponse;
 
 import lombok.AllArgsConstructor;
@@ -21,10 +22,10 @@ public class DeleteFileUseCase {
         log.info("Deleting file of ID: {}", fileId);
         Optional<Metadata> metadata = metadataService.getMetadata(fileId);
 
-        return metadata.flatMap(this::tryToDelete);
+        return metadata.map(this::tryToDelete);
     }
 
-    private Optional<DeleteFileResponse> tryToDelete(Metadata metadata) {
+    private DeleteFileResponse tryToDelete(Metadata metadata) {
         boolean deleteSucceed;
 
         try {
@@ -33,10 +34,9 @@ public class DeleteFileUseCase {
                 metadataService.deleteMetadata(metadata.getId());
             }
         } catch(FileNotFoundException e) {
-            log.info("Deleting file with ID {} has failed due to: ", metadata.getId(), e);
-            return Optional.empty();
+            throw new DeletingFileException(e);
         }
 
-        return Optional.of(new DeleteFileResponse(metadata));
+        return new DeleteFileResponse(metadata);
     }
 }

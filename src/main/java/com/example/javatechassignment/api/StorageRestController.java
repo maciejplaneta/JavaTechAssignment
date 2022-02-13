@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.javatechassignment.domain.storage.exceptions.DeletingFileException;
 import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
 import com.example.javatechassignment.domain.usecases.GetFileUseCase;
@@ -71,9 +70,9 @@ class StorageRestController {
         return deleteFileUseCase
               .delete(fileId)
               .map(response -> ResponseEntity
-                    .status(NO_CONTENT)
+                    .status(OK)
                     .body(response))
-              .orElseThrow(DeletingFileException::new);
+              .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
 }
