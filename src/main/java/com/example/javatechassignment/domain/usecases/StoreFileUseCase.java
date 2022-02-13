@@ -7,6 +7,7 @@ import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
 import com.example.javatechassignment.domain.storage.exceptions.StoringFileException;
 import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
+import com.example.javatechassignment.domain.validation.FormatValidator;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +21,11 @@ public class StoreFileUseCase {
 
     private final MetadataService metadataService;
     private final StorageService storageService;
+    private final FormatValidator formatValidator = new FormatValidator();
 
     public StoreFileResponse storeFile(MultipartFile file) {
+        formatValidator.validateExtension(file);
+
         log.info("Storing file {}", file.getOriginalFilename());
         Metadata saveMetadata = metadataService.saveMetadata(file);
         return tryToStoreFile(file, saveMetadata);

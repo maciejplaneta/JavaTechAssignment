@@ -8,6 +8,7 @@ import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
 import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.usecases.responses.ReplaceFileResponse;
+import com.example.javatechassignment.domain.validation.FormatValidator;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,10 +19,12 @@ public class ReplaceFileUseCase {
 
     private final MetadataService metadataService;
     private final StorageService storageService;
+    private final FormatValidator formatValidator = new FormatValidator();
 
     public Optional<ReplaceFileResponse> replaceFile(Long fileId, MultipartFile newFile) {
-        log.info("Trying to replace file of ID: {}", fileId);
+        formatValidator.validateExtension(newFile);
 
+        log.info("Trying to replace file of ID: {}", fileId);
         Optional<Metadata> oldMetadata = metadataService.getMetadata(fileId);
         return oldMetadata.map(metadata -> tryToReplaceFile(metadata, newFile));
     }
