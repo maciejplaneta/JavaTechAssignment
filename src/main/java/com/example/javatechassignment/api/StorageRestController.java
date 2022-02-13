@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.javatechassignment.domain.storage.exceptions.DeletingFileException;
-import com.example.javatechassignment.domain.storage.exceptions.ReadingFileException;
 import com.example.javatechassignment.domain.storage.exceptions.ReplacingFileException;
 import com.example.javatechassignment.domain.storage.exceptions.StoringFileException;
 import com.example.javatechassignment.domain.usecases.DeleteFileUseCase;
@@ -57,7 +56,7 @@ class StorageRestController {
                     .status(OK)
                     .header(CONTENT_DISPOSITION, format("attachment; filename=%s", response.getCurrentFileName()))
                     .body(response.getContent()))
-              .orElseThrow(ReadingFileException::new);
+              .orElseGet(() -> ResponseEntity.noContent().build());
     }
 
     @PostMapping(value = "/{fileId}")
