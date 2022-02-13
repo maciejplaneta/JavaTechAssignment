@@ -1,11 +1,11 @@
 package com.example.javatechassignment.domain.usecases;
 
 import java.io.IOException;
-import java.util.Optional;
 import org.springframework.web.multipart.MultipartFile;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
+import com.example.javatechassignment.domain.storage.exceptions.StoringFileException;
 import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
 
 import lombok.AllArgsConstructor;
@@ -21,20 +21,20 @@ public class StoreFileUseCase {
     private final MetadataService metadataService;
     private final StorageService storageService;
 
-    public Optional<StoreFileResponse> store(MultipartFile file) {
+    public StoreFileResponse store(MultipartFile file) {
         log.info("Storing file {}", file.getOriginalFilename());
         Metadata saveMetadata = metadataService.saveMetadata(file);
         return tryToStoreFile(file, saveMetadata);
     }
 
-    private Optional<StoreFileResponse> tryToStoreFile(MultipartFile file, Metadata saveMetadata) {
+    private StoreFileResponse tryToStoreFile(MultipartFile file, Metadata saveMetadata) {
         try {
             storageService.storeFile(file, saveMetadata);
-            return Optional.of(new StoreFileResponse(saveMetadata));
+            return new StoreFileResponse(saveMetadata);
         } catch(IOException e) {
             log.error("File could not be stored due to: ", e);
             metadataService.deleteMetadata(saveMetadata.getId());
-            return Optional.empty();
+            throw new StoringFileException(e);
         }
     }
 }

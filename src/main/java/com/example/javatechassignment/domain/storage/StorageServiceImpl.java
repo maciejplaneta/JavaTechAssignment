@@ -12,6 +12,9 @@ class StorageServiceImpl implements StorageService {
 
     @Override
     public void storeFile(MultipartFile multipart, Metadata fileMetadata) throws IOException {
+        if (storageDirectoryDoesNotExist()) {
+            throw new FileNotFoundException("Storage directory does not exist");
+        }
         File newFile = new File(storagePath(), fileMetadata.getId() + "_" + multipart.getOriginalFilename());
         multipart.transferTo(newFile);
     }
@@ -35,5 +38,10 @@ class StorageServiceImpl implements StorageService {
     public void replaceFile(Metadata metadata, MultipartFile newFile) throws IOException {
         deleteFile(metadata);
         storeFile(newFile, metadata);
+    }
+
+    private boolean storageDirectoryDoesNotExist() {
+        File storageDirectory = new File(storagePath());
+        return !storageDirectory.exists() || !storageDirectory.isDirectory();
     }
 }
