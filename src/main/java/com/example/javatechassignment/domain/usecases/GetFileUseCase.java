@@ -19,7 +19,7 @@ public class GetFileUseCase {
     private final MetadataService metadataService;
     private final StorageService storageService;
 
-    public Optional<GetFileResponse> get(Long fileId) {
+    public Optional<GetFileResponse> getFile(Long fileId) {
         log.info("Reading file of ID: {}", fileId);
         Optional<Metadata> fileMetadata = metadataService.getMetadata(fileId);
 

@@ -30,4 +30,8 @@ public class UseCasesConfiguration {
         return new ReplaceFileUseCase(metadataService, storageService);
     }
 
+    @Bean
+    public GetMetadataUseCase getMetadataUseCase(MetadataService metadataService) {
+        return new GetMetadataUseCase(metadataService);
+    }
 }

@@ -1,6 +1,8 @@
 package com.example.javatechassignment.domain.metadata;
 
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
@@ -32,12 +34,11 @@ class MetadataServiceImpl implements MetadataService {
         oldMetadata.setSize(newFile.getSize());
 
         return metadataRepository.save(oldMetadata);
+    }
 
-//        return oldFile.map(metadata -> {
-//            metadata.setCurrentName(newFile.getOriginalFilename());
-//            metadata.setSize(newFile.getSize());
-//            return Optional.of(metadataRepository.save(metadata));
-//        }).orElse(Optional.empty());
+    @Override
+    public Page<Metadata> getMetadataInChunks(PageRequest pageRequest) {
+        return metadataRepository.findAll(pageRequest);
     }
 
 }

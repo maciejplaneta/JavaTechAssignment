@@ -18,7 +18,7 @@ public class DeleteFileUseCase {
     private final MetadataService metadataService;
     private final StorageService storageService;
 
-    public Optional<DeleteFileResponse> delete(Long fileId) {
+    public Optional<DeleteFileResponse> deleteFile(Long fileId) {
         log.info("Deleting file of ID: {}", fileId);
         Optional<Metadata> metadata = metadataService.getMetadata(fileId);
 

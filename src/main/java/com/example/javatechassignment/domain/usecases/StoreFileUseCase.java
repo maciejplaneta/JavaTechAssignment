@@ -21,7 +21,7 @@ public class StoreFileUseCase {
     private final MetadataService metadataService;
     private final StorageService storageService;
 
-    public StoreFileResponse store(MultipartFile file) {
+    public StoreFileResponse storeFile(MultipartFile file) {
         log.info("Storing file {}", file.getOriginalFilename());
         Metadata saveMetadata = metadataService.saveMetadata(file);
         return tryToStoreFile(file, saveMetadata);

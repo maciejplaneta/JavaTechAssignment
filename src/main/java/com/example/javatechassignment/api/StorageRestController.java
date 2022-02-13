@@ -25,28 +25,26 @@ import com.example.javatechassignment.domain.usecases.responses.ReplaceFileRespo
 import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/storage")
 @AllArgsConstructor
 class StorageRestController {
 
-    private StoreFileUseCase storeFileUseCase;
-    private GetFileUseCase getFileUseCase;
-    private ReplaceFileUseCase replaceFileUseCase;
-    private DeleteFileUseCase deleteFileUseCase;
+    private final StoreFileUseCase storeFileUseCase;
+    private final GetFileUseCase getFileUseCase;
+    private final ReplaceFileUseCase replaceFileUseCase;
+    private final DeleteFileUseCase deleteFileUseCase;
 
     @PostMapping
     public ResponseEntity<StoreFileResponse> storeFile(@RequestParam("file") MultipartFile file) {
-        return ResponseEntity.status(CREATED).body(storeFileUseCase.store(file));
+        return ResponseEntity.status(CREATED).body(storeFileUseCase.storeFile(file));
     }
 
     @GetMapping(value = "/{fileId}")
     public ResponseEntity<byte[]> getStoredFile(@PathVariable("fileId") Long fileId) {
         return getFileUseCase
-              .get(fileId)
+              .getFile(fileId)
               .map(response -> ResponseEntity
                     .status(OK)
                     .header(CONTENT_DISPOSITION, format("attachment; filename=%s", response.getCurrentFileName()))
@@ -58,20 +56,16 @@ class StorageRestController {
     public ResponseEntity<ReplaceFileResponse> replaceFile(@PathVariable("fileId") Long fileId,
           @RequestParam("file") MultipartFile newFile) {
         return replaceFileUseCase
-              .replace(fileId, newFile)
-              .map(response -> ResponseEntity
-                    .status(OK)
-                    .body(response))
+              .replaceFile(fileId, newFile)
+              .map(response -> ResponseEntity.status(OK).body(response))
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
     @DeleteMapping(value = "/{fileId}")
     public ResponseEntity<DeleteFileResponse> deleteFile(@PathVariable("fileId") Long fileId) {
         return deleteFileUseCase
-              .delete(fileId)
-              .map(response -> ResponseEntity
-                    .status(OK)
-                    .body(response))
+              .deleteFile(fileId)
+              .map(response -> ResponseEntity.status(OK).body(response))
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 

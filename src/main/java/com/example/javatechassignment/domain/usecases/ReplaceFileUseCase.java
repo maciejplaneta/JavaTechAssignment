@@ -19,7 +19,7 @@ public class ReplaceFileUseCase {
     private final MetadataService metadataService;
     private final StorageService storageService;
 
-    public Optional<ReplaceFileResponse> replace(Long fileId, MultipartFile newFile) {
+    public Optional<ReplaceFileResponse> replaceFile(Long fileId, MultipartFile newFile) {
         log.info("Trying to replace file of ID: {}", fileId);
 
         Optional<Metadata> oldMetadata = metadataService.getMetadata(fileId);
