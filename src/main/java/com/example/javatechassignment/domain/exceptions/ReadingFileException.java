@@ -1,8 +1,6 @@
-package com.example.javatechassignment.domain.storage.exceptions;
+package com.example.javatechassignment.domain.exceptions;
 
 public class ReadingFileException extends RuntimeException {
-    public ReadingFileException() {
-    }
 
     public ReadingFileException(Throwable cause) {
         super(cause);

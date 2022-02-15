@@ -1,8 +1,6 @@
-package com.example.javatechassignment.domain.storage.exceptions;
+package com.example.javatechassignment.domain.exceptions;
 
 public class DeletingFileException extends RuntimeException {
-    public DeletingFileException() {
-    }
 
     public DeletingFileException(Throwable cause) {
         super(cause);

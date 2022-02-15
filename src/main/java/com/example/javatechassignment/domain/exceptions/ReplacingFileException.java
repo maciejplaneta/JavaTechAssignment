@@ -1,10 +1,11 @@
-package com.example.javatechassignment.domain.storage.exceptions;
+package com.example.javatechassignment.domain.exceptions;
 
 public class ReplacingFileException extends RuntimeException {
-    public ReplacingFileException() {
-    }
-
     public ReplacingFileException(Throwable cause) {
         super(cause);
+    }
+
+    public ReplacingFileException(String message) {
+        super(message);
     }
 }

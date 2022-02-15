@@ -2,10 +2,10 @@ package com.example.javatechassignment.domain.usecases;
 
 import java.io.FileNotFoundException;
 import java.util.Optional;
+import com.example.javatechassignment.domain.exceptions.DeletingFileException;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
-import com.example.javatechassignment.domain.storage.exceptions.DeletingFileException;
 import com.example.javatechassignment.domain.usecases.responses.DeleteFileResponse;
 
 import lombok.AllArgsConstructor;

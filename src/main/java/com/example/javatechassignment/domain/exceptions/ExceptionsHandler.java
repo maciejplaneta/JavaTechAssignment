@@ -1,4 +1,4 @@
-package com.example.javatechassignment.domain.validation;
+package com.example.javatechassignment.domain.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,11 +9,17 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @ControllerAdvice
-class UnsupportedFormatHandler {
+class ExceptionsHandler {
 
-    @ExceptionHandler(UnsupportedFormatException.class)
-    ResponseEntity<Error> handleUnsupportedFormatException(UnsupportedFormatException ex) {
+    @ExceptionHandler(UnsupportedExtensionException.class)
+    ResponseEntity<Error> handleUnsupportedFormatException(UnsupportedExtensionException ex) {
         Error error = new Error(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
+        return new ResponseEntity<>(error, error.getHttpStatus());
+    }
+
+    @ExceptionHandler(ReplacingFileException.class)
+    ResponseEntity<Error> handleReplacingFileException(ReplacingFileException ex) {
+        Error error = new Error(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
         return new ResponseEntity<>(error, error.getHttpStatus());
     }
 

@@ -6,6 +6,6 @@ import lombok.Getter;
 abstract class BaseFileActionResponse {
     protected Long fileId;
     protected String fileName;
-    protected Long fileSize;
     protected String fileExtension;
+    protected Long fileSize;
 }

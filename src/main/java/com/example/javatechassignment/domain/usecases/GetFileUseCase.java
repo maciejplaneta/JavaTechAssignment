@@ -3,10 +3,10 @@ package com.example.javatechassignment.domain.usecases;
 import java.io.File;
 import java.util.Optional;
 import org.apache.commons.io.FileUtils;
+import com.example.javatechassignment.domain.exceptions.ReadingFileException;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.metadata.MetadataService;
 import com.example.javatechassignment.domain.storage.StorageService;
-import com.example.javatechassignment.domain.storage.exceptions.ReadingFileException;
 import com.example.javatechassignment.domain.usecases.responses.GetFileResponse;
 
 import lombok.AllArgsConstructor;
