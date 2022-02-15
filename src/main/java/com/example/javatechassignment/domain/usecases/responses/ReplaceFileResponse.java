@@ -5,17 +5,15 @@ import com.example.javatechassignment.domain.metadata.Metadata;
 import lombok.Value;
 
 @Value
-public class ReplaceFileResponse {
+public class ReplaceFileResponse extends BaseFileActionResponse {
 
-    Long fileId;
-    String currentFileName;
     String originalFileName;
-    Long currentSize;
 
     public ReplaceFileResponse(Metadata updatedMetadata) {
-        fileId = updatedMetadata.getId();
-        currentFileName = updatedMetadata.getCurrentName();
-        originalFileName = updatedMetadata.getOriginalName();
-        currentSize = updatedMetadata.getSize();
+        this.fileId = updatedMetadata.getId();
+        this.originalFileName = updatedMetadata.getOriginalName();
+        this.fileName = updatedMetadata.getCurrentName();
+        this.fileSize = updatedMetadata.getSize();
+        this.fileExtension = updatedMetadata.getExtension();
     }
 }

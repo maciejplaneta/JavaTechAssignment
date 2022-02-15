@@ -1,7 +1,5 @@
 package com.example.javatechassignment.api;
 
-import static java.lang.String.format;
-import static org.springframework.http.HttpHeaders.CONTENT_DISPOSITION;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 import static org.springframework.http.HttpStatus.OK;
@@ -47,7 +45,7 @@ class StorageRestController {
               .getFile(fileId)
               .map(response -> ResponseEntity
                     .status(OK)
-                    .header(CONTENT_DISPOSITION, format("attachment; filename=%s", response.getCurrentFileName()))
+                    .headers(response.getHeaders())
                     .body(response.getContent()))
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }

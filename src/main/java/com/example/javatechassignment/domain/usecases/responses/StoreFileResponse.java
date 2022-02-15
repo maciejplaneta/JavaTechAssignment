@@ -5,16 +5,12 @@ import com.example.javatechassignment.domain.metadata.Metadata;
 import lombok.Value;
 
 @Value
-public class StoreFileResponse {
-    Long id;
-    String name;
-    Long size;
-    String extension;
+public class StoreFileResponse extends BaseFileActionResponse {
 
-    public StoreFileResponse(Metadata fileMetadata) {
-        this.id = fileMetadata.getId();
-        this.name = fileMetadata.getCurrentName();
-        this.size = fileMetadata.getSize();
-        this.extension = fileMetadata.getExtension();
+    public StoreFileResponse(Metadata metadata) {
+        this.fileId = metadata.getId();
+        this.fileName = metadata.getCurrentName();
+        this.fileSize = metadata.getSize();
+        this.fileExtension = metadata.getExtension();
     }
 }

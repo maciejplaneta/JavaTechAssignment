@@ -1,24 +1,22 @@
 package com.example.javatechassignment.domain.usecases.responses;
 
+import org.springframework.http.HttpHeaders;
 import com.example.javatechassignment.domain.metadata.Metadata;
 
 import lombok.Value;
 
 @Value
-public class GetFileResponse {
-    Long fileId;
-    String currentFileName;
-    String originalFileName;
-    Long fileSize;
-    String fileExtension;
+public class GetFileResponse extends BaseFileActionResponse {
     byte[] content;
+    HttpHeaders headers;
 
     public GetFileResponse(Metadata metadata, byte[] content) {
         this.fileId = metadata.getId();
-        this.currentFileName = metadata.getCurrentName();
-        this.originalFileName = metadata.getOriginalName();
+        this.fileName = metadata.getCurrentName();
         this.fileSize = metadata.getSize();
         this.fileExtension = metadata.getExtension();
         this.content = content;
+        this.headers = new GetResponseHeadersCreator(metadata).createGetFileResponseHeaders();
     }
+
 }
