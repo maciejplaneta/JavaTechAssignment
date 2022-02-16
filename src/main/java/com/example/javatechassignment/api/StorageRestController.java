@@ -39,7 +39,7 @@ class StorageRestController {
 
     @Operation(summary = "Store file")
     @ApiResponses(value = {
-          @ApiResponse(code = 200, message = "File was retrieved successfully"),
+          @ApiResponse(code = 201, message = "File was stored successfully"),
           @ApiResponse(code = 415, message = "Unsupported file extension"),
           @ApiResponse(code = 500, message = "Server error has occurred - file could not be stored")
     })
