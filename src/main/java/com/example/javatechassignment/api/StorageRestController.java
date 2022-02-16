@@ -81,7 +81,7 @@ class StorageRestController {
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
-    @Operation(summary = "Get paged metadata")
+    @Operation(summary = "Delete file of given ID")
     @ApiResponses(value = {
           @ApiResponse(code = 200, message = "File was deleted successfully"),
           @ApiResponse(code = 204, message = "File with given ID is not present in storage"),
