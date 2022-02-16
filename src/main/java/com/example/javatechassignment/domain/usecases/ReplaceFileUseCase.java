@@ -36,7 +36,8 @@ public class ReplaceFileUseCase {
                   FilenameUtils.getExtension(newFile.getOriginalFilename()));
 
             storageService.replaceFile(oldMetadata, newFile);
-            return new ReplaceFileResponse(metadataService.update(oldMetadata, newFile));
+            Metadata updatedMetadata = metadataService.update(oldMetadata, newFile);
+            return new ReplaceFileResponse(updatedMetadata);
         } catch(IOException e) {
             throw new ReplacingFileException(e);
         }

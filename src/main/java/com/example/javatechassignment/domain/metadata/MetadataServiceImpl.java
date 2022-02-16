@@ -30,8 +30,7 @@ class MetadataServiceImpl implements MetadataService {
 
     @Override
     public Metadata update(Metadata oldMetadata, MultipartFile newFile) {
-        oldMetadata.setCurrentName(newFile.getOriginalFilename());
-        oldMetadata.setSize(newFile.getSize());
+        oldMetadata.update(newFile);
 
         return metadataRepository.save(oldMetadata);
     }

@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
@@ -35,9 +36,22 @@ public class Metadata {
     private String extension;
 
     public Metadata(MultipartFile multipartFile) {
-        this.originalName = multipartFile.getOriginalFilename();
-        this.currentName = multipartFile.getOriginalFilename();
+        String fullFileName = multipartFile.getOriginalFilename();
+        String fileName = StringUtils.substringBefore(fullFileName, ".");
+        String fileExtension = FilenameUtils.getExtension(fullFileName);
+
+        this.originalName = fileName;
+        this.currentName = fileName;
         this.size = multipartFile.getSize();
-        this.extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        this.extension = fileExtension;
+    }
+
+    public String getFullFileName() {
+        return id + "_" + currentName + "." + extension;
+    }
+
+    public void update(MultipartFile newFile) {
+        this.currentName = StringUtils.substringBefore(newFile.getOriginalFilename(), ".");
+        this.size = newFile.getSize();
     }
 }

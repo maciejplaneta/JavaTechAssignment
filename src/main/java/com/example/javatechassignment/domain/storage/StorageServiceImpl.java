@@ -21,7 +21,7 @@ class StorageServiceImpl implements StorageService {
 
     @Override
     public File getFile(Metadata metadata) {
-        return new File(storagePath(), metadata.getId() + "_" + metadata.getCurrentName());
+        return new File(storagePath(), metadata.getFullFileName());
     }
 
     @Override

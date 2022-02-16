@@ -21,7 +21,7 @@ class GetResponseHeadersCreator {
     HttpHeaders createGetFileResponseHeaders() {
         HttpHeaders headers = new HttpHeaders();
 
-        headers.setContentDisposition(ContentDisposition.attachment().filename(metadata.getCurrentName()).build());
+        headers.setContentDisposition(ContentDisposition.attachment().filename(metadata.getFullFileName()).build());
         headers.add(ID.name(), String.valueOf(metadata.getId()));
         headers.add(CURRENT_NAME.name(), String.valueOf(metadata.getCurrentName()));
         headers.add(ORIGINAL_NAME.name(), String.valueOf(metadata.getOriginalName()));
