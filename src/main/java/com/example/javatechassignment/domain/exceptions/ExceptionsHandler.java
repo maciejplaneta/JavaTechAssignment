@@ -12,13 +12,13 @@ import lombok.RequiredArgsConstructor;
 class ExceptionsHandler {
 
     @ExceptionHandler(UnsupportedExtensionException.class)
-    ResponseEntity<Error> handleUnsupportedFormatException(UnsupportedExtensionException ex) {
+    ResponseEntity<Error> handleUnsupportedExtensionException(UnsupportedExtensionException ex) {
         Error error = new Error(HttpStatus.UNSUPPORTED_MEDIA_TYPE, ex.getMessage());
         return new ResponseEntity<>(error, error.getHttpStatus());
     }
 
-    @ExceptionHandler(ReplacingFileException.class)
-    ResponseEntity<Error> handleReplacingFileException(ReplacingFileException ex) {
+    @ExceptionHandler(DifferentExtensionsException.class)
+    ResponseEntity<Error> handleReplacingFileException(DifferentExtensionsException ex) {
         Error error = new Error(HttpStatus.NOT_ACCEPTABLE, ex.getMessage());
         return new ResponseEntity<>(error, error.getHttpStatus());
     }

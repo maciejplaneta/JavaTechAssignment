@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import com.example.javatechassignment.domain.exceptions.ReplacingFileException;
+import com.example.javatechassignment.domain.exceptions.DifferentExtensionsException;
 import com.example.javatechassignment.domain.exceptions.UnsupportedExtensionException;
 
 public class ExtensionValidator {
@@ -27,7 +27,7 @@ public class ExtensionValidator {
 
     public void checkIfFileExtensionsMatch(String firstExtension, String secondExtension) {
         if(!StringUtils.equals(firstExtension, secondExtension)) {
-            throw new ReplacingFileException("Files with different extensions can't be replaced");
+            throw new DifferentExtensionsException("Files with different extensions can't be replaced");
         }
     }
 

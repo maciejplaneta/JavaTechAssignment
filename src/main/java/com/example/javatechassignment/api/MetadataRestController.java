@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.javatechassignment.domain.metadata.Metadata;
 import com.example.javatechassignment.domain.usecases.GetMetadataUseCase;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -21,6 +22,7 @@ class MetadataRestController {
 
     private final GetMetadataUseCase getMetadataUseCase;
 
+    @Operation(summary = "Get metadata of particular file")
     @GetMapping("/{fileId}")
     public ResponseEntity<Metadata> getMetadata(@PathVariable("fileId") Long fileId) {
         return getMetadataUseCase
@@ -29,6 +31,7 @@ class MetadataRestController {
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
+    @Operation(summary = "Get paged metadata")
     @GetMapping
     public ResponseEntity<Page<Metadata>> getMetadataInChunks(@RequestParam("page") Integer page,
           @RequestParam("size") Integer size) {

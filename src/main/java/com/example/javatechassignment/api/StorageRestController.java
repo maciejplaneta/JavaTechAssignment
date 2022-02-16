@@ -22,6 +22,9 @@ import com.example.javatechassignment.domain.usecases.responses.DeleteFileRespon
 import com.example.javatechassignment.domain.usecases.responses.ReplaceFileResponse;
 import com.example.javatechassignment.domain.usecases.responses.StoreFileResponse;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -34,11 +37,23 @@ class StorageRestController {
     private final ReplaceFileUseCase replaceFileUseCase;
     private final DeleteFileUseCase deleteFileUseCase;
 
+    @Operation(summary = "Store file")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "File was retrieved successfully"),
+          @ApiResponse(code = 415, message = "Unsupported file extension"),
+          @ApiResponse(code = 500, message = "Server error has occurred - file could not be stored")
+    })
     @PostMapping
     public ResponseEntity<StoreFileResponse> storeFile(@RequestParam("file") MultipartFile file) {
         return ResponseEntity.status(CREATED).body(storeFileUseCase.storeFile(file));
     }
 
+    @Operation(summary = "Get file of given ID")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "File was retrieved successfully"),
+          @ApiResponse(code = 204, message = "File with given ID is not present in storage"),
+          @ApiResponse(code = 500, message = "Server error has occurred - file could not be retrieved")
+    })
     @GetMapping(value = "/{fileId}")
     public ResponseEntity<byte[]> getStoredFile(@PathVariable("fileId") Long fileId) {
         return getFileUseCase
@@ -50,6 +65,13 @@ class StorageRestController {
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
+    @Operation(summary = "Replace file of given ID with another - they must have the same extension")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "File was replaced successfully"),
+          @ApiResponse(code = 204, message = "File with given ID is not present in storage"),
+          @ApiResponse(code = 416, message = "New and old file have different extension"),
+          @ApiResponse(code = 500, message = "Server error has occurred - file could not be replaced")
+    })
     @PutMapping(value = "/{fileId}")
     public ResponseEntity<ReplaceFileResponse> replaceFile(@PathVariable("fileId") Long fileId,
           @RequestParam("file") MultipartFile newFile) {
@@ -59,6 +81,12 @@ class StorageRestController {
               .orElseGet(() -> ResponseEntity.status(NO_CONTENT).build());
     }
 
+    @Operation(summary = "Get paged metadata")
+    @ApiResponses(value = {
+          @ApiResponse(code = 200, message = "File was deleted successfully"),
+          @ApiResponse(code = 204, message = "File with given ID is not present in storage"),
+          @ApiResponse(code = 500, message = "Server error has occurred - file could not be deleted")
+    })
     @DeleteMapping(value = "/{fileId}")
     public ResponseEntity<DeleteFileResponse> deleteFile(@PathVariable("fileId") Long fileId) {
         return deleteFileUseCase
