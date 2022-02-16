@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("/metadata")
 @AllArgsConstructor
-public class MetadataRestController {
+class MetadataRestController {
 
     private final GetMetadataUseCase getMetadataUseCase;
 

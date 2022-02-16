@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import com.example.javatechassignment.domain.storage.StorageDirectoryAccessor;
 import com.example.javatechassignment.domain.usecases.UseCasesConfiguration;
 
-@Import({UseCasesConfiguration.class})
+@Import({
+      UseCasesConfiguration.class,
+      SwaggerConfiguration.class
+})
 @SpringBootApplication
 @EnableJpaRepositories
 public class JavaTechAssignmentApplication {
