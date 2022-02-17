@@ -12,9 +12,6 @@ import com.example.javatechassignment.domain.validation.ExtensionValidator;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Layer which is grouping and coordinating services work, so they don't have to know of each other
- */
 @Slf4j
 @AllArgsConstructor
 public class StoreFileUseCase {

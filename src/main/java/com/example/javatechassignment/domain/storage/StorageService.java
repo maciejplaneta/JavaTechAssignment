@@ -10,7 +10,7 @@ public interface StorageService {
 
     void storeFile(MultipartFile file, Metadata fileMetadata) throws IOException;
 
-    File getFile(Metadata metadata);
+    File getFile(Metadata metadata) throws FileNotFoundException;
 
     boolean deleteFile(Metadata metadata) throws FileNotFoundException;
 

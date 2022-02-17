@@ -20,8 +20,13 @@ class StorageServiceImpl implements StorageService {
     }
 
     @Override
-    public File getFile(Metadata metadata) {
-        return new File(storagePath(), metadata.getFullFileName());
+    public File getFile(Metadata metadata) throws FileNotFoundException {
+        File file = new File(storagePath(), metadata.getFullFileName());
+        if (file.exists()) {
+            return file;
+        } else {
+            throw new FileNotFoundException(String.format("File '%s' not found", metadata.getCurrentName()));
+        }
     }
 
     @Override
