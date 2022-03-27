@@ -48,8 +48,8 @@ public class StorageDirectoryAccessor {
     private String generateStorageDirectoryPath() {
         StringBuilder sb = new StringBuilder();
         sb.append(System.getProperty("java.io.tmpdir"))
-          .append("\\upload")
-          .append("\\")
+          .append("/upload")
+          .append("/")
           .append(dateFormat.format(new Date()));
         return sb.toString();
     }
